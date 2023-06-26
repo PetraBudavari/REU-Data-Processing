@@ -5,7 +5,6 @@ from pathlib import Path
 import argparse
 import datetime
 
- #hello
 def main():
     parser = argparse.ArgumentParser(
         #prog='ProgramName',
