@@ -81,10 +81,12 @@ def main():
         start = str(row["calibration_start_time"])
         end = str(row["calibration_end_time"])
         w1, h1, x1, y1 = 546, 308, 0, 360
-        vid_cal = f'''ffmpeg -i {filename} -filter:v "crop={w1}:{h1}:{x1}:{y1}" -ss {start} -to {end} {vid}_{cal}.mp4'''
-        print (vid_cal)
-        subprocess.run(vid_cal)
-        os.rename(f'''{path_file}/{vid}_{cal}.mp4''', f'''{path_cal}/{vid}_{cal}.mp4''')
+        # Some videos do not have calibration - skip this part for those videos
+        if pd.notnull(start):
+            vid_cal = f'''ffmpeg -i {filename} -filter:v "crop={w1}:{h1}:{x1}:{y1}" -ss {start} -to {end} {vid}_{cal}.mp4'''
+            print (vid_cal)
+            subprocess.run(vid_cal)
+            os.rename(f'''{path_file}/{vid}_{cal}.mp4''', f'''{path_cal}/{vid}_{cal}.mp4''')
 
         #Overhead 
         ovr = "overhead"
